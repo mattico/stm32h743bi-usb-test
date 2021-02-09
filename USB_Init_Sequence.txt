@@ -1,0 +1,38 @@
+SCB_EnableICache();
+SCB_EnableDCache();
+HAL_Init();
+    HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
+    HAL_InitTick(TICK_INT_PRIORITY);
+SystemClock_Config();
+MX_GPIO_Init();
+    __HAL_RCC_GPIOC_CLK_ENABLE();
+    __HAL_RCC_GPIOI_CLK_ENABLE();
+    __HAL_RCC_GPIOH_CLK_ENABLE();
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+MX_USB_DEVICE_Init();
+    USBD_Init();
+        USBD_LL_Init();
+            HAL_PCD_Init(&hpcd_USB_OTG_HS);
+                USB_DisableGlobalInt();
+                USB_CoreInit(hpcd->Instance, hpcd->Init);
+                    USBx->GCCFG &= ~(USB_OTG_GCCFG_PWRDWN);
+                    USBx->GUSBCFG &= ~(USB_OTG_GUSBCFG_TSDPS | USB_OTG_GUSBCFG_ULPIFSLS | USB_OTG_GUSBCFG_PHYSEL); /* Init The ULPI Interface */
+                    USBx->GUSBCFG &= ~(USB_OTG_GUSBCFG_ULPIEVBUSD | USB_OTG_GUSBCFG_ULPIEVBUSI); /* Select vbus source */
+                    ret = USB_CoreReset(USBx); /* Reset after a PHY select  */
+                        while ((USBx->GRSTCTL & USB_OTG_GRSTCTL_AHBIDL) == 0U) {} /* Wait for AHB master IDLE state. */
+                        USBx->GRSTCTL |= USB_OTG_GRSTCTL_CSRST; /* Core Soft Reset */
+                        while ((USBx->GRSTCTL & USB_OTG_GRSTCTL_CSRST) == USB_OTG_GRSTCTL_CSRST) {}
+                USB_SetCurrentMode(hpcd->Instance, USB_DEVICE_MODE);
+                    USBx->GUSBCFG &= ~(USB_OTG_GUSBCFG_FHMOD | USB_OTG_GUSBCFG_FDMOD);
+                    USBx->GUSBCFG |= USB_OTG_GUSBCFG_FDMOD;
+                    HAL_Delay(50U);
+                /* Init endpoitns structures */
+                ...
+                USB_DevInit(hpcd->Instance, hpcd->Init);
+                    ...
+                
+            HAL_PCDEx_SetRxFiFo(&hpcd_USB_OTG_HS, 0x200);
+            HAL_PCDEx_SetTxFiFo(&hpcd_USB_OTG_HS, 0, 0x80);
+            HAL_PCDEx_SetTxFiFo(&hpcd_USB_OTG_HS, 1, 0x174);
+

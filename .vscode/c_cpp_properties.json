@@ -9,6 +9,7 @@
                 "DEBUG",
                 "USE_HAL_DRIVER",
                 "STM32H743x",
+                "USB_OTG_HS",
                 "uint8_t=unsigned char",
                 "int8_t=signed char",
                 "uint16_t=short int",
