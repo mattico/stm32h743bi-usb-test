@@ -158,6 +158,7 @@ static int8_t CDC_Init_HS(void)
   /* Set Application Buffers */
   USBD_CDC_SetTxBuffer(&hUsbDeviceHS, UserTxBufferHS, 0);
   USBD_CDC_SetRxBuffer(&hUsbDeviceHS, UserRxBufferHS);
+  USBD_DbgLog("CDC_Init_HS");
   return (USBD_OK);
   /* USER CODE END 8 */
 }
@@ -170,6 +171,7 @@ static int8_t CDC_Init_HS(void)
 static int8_t CDC_DeInit_HS(void)
 {
   /* USER CODE BEGIN 9 */
+	USBD_DbgLog("CDC_DeInit_HS");
   return (USBD_OK);
   /* USER CODE END 9 */
 }
@@ -183,6 +185,8 @@ static int8_t CDC_DeInit_HS(void)
   */
 static int8_t CDC_Control_HS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
 {
+	USBD_DbgLog("CDC_Control_HS(%d, ptr, %d)", cmd, length);
+
   /* USER CODE BEGIN 10 */
   switch(cmd)
   {

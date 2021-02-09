@@ -58,6 +58,24 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define USB_RESET_Pin GPIO_PIN_2
+#define USB_RESET_GPIO_Port GPIOB
+#define USB_STATUS_LED_Pin GPIO_PIN_2
+#define USB_STATUS_LED_GPIO_Port GPIOJ
+#define DLED_1_Pin GPIO_PIN_2
+#define DLED_1_GPIO_Port GPIOG
+#define DLED_2_Pin GPIO_PIN_3
+#define DLED_2_GPIO_Port GPIOG
+#define DLED_3_Pin GPIO_PIN_4
+#define DLED_3_GPIO_Port GPIOG
+#define DLED_4_Pin GPIO_PIN_5
+#define DLED_4_GPIO_Port GPIOG
+#define DLED_5_Pin GPIO_PIN_6
+#define DLED_5_GPIO_Port GPIOG
+#define DLED_6_Pin GPIO_PIN_7
+#define DLED_6_GPIO_Port GPIOG
+#define DEBUG_BTN_Pin GPIO_PIN_8
+#define DEBUG_BTN_GPIO_Port GPIOG
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
