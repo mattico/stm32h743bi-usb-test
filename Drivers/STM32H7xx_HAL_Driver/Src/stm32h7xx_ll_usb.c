@@ -81,10 +81,12 @@ static HAL_StatusTypeDef USB_CoreReset(USB_OTG_GlobalTypeDef *USBx);
   */
 HAL_StatusTypeDef USB_CoreInit(USB_OTG_GlobalTypeDef *USBx, USB_OTG_CfgTypeDef cfg)
 {
+	printf("USB_CoreInit\n");
   HAL_StatusTypeDef ret;
 
   if (cfg.phy_itface == USB_OTG_ULPI_PHY)
   {
+	  printf("\tInitializng PHY\n");
     USBx->GCCFG &= ~(USB_OTG_GCCFG_PWRDWN);
 
     /* Init The ULPI Interface */
@@ -277,6 +279,7 @@ HAL_StatusTypeDef USB_SetCurrentMode(USB_OTG_GlobalTypeDef *USBx, USB_OTG_ModeTy
   */
 HAL_StatusTypeDef USB_DevInit(USB_OTG_GlobalTypeDef *USBx, USB_OTG_CfgTypeDef cfg)
 {
+	printf("USB_DevInit\n");
   HAL_StatusTypeDef ret = HAL_OK;
   uint32_t USBx_BASE = (uint32_t)USBx;
   uint32_t i;
@@ -1295,6 +1298,7 @@ HAL_StatusTypeDef USB_EP0_OutStart(USB_OTG_GlobalTypeDef *USBx, uint8_t dma, uin
   */
 static HAL_StatusTypeDef USB_CoreReset(USB_OTG_GlobalTypeDef *USBx)
 {
+	printf("USB_CoreReset\r\n");
   uint32_t count = 0U;
 
   /* Wait for AHB master IDLE state. */
@@ -1302,6 +1306,7 @@ static HAL_StatusTypeDef USB_CoreReset(USB_OTG_GlobalTypeDef *USBx)
   {
     if (++count > 200000U)
     {
+    	printf("\tTimeout waiting for AHB master IDLE\r\n");
       return HAL_TIMEOUT;
     }
   }
@@ -1315,6 +1320,7 @@ static HAL_StatusTypeDef USB_CoreReset(USB_OTG_GlobalTypeDef *USBx)
   {
     if (++count > 200000U)
     {
+    	printf("\tTimeout waiting for USB Core Soft Reset\r\n");
       return HAL_TIMEOUT;
     }
   }
@@ -1333,6 +1339,7 @@ static HAL_StatusTypeDef USB_CoreReset(USB_OTG_GlobalTypeDef *USBx)
   */
 HAL_StatusTypeDef USB_HostInit(USB_OTG_GlobalTypeDef *USBx, USB_OTG_CfgTypeDef cfg)
 {
+	printf("USB_HostInit\n");
   uint32_t USBx_BASE = (uint32_t)USBx;
   uint32_t i;
 
@@ -1428,6 +1435,7 @@ HAL_StatusTypeDef USB_HostInit(USB_OTG_GlobalTypeDef *USBx, USB_OTG_CfgTypeDef c
   */
 HAL_StatusTypeDef USB_InitFSLSPClkSel(USB_OTG_GlobalTypeDef *USBx, uint8_t freq)
 {
+	USBD_DbgLog("USB_InitFSLSPClkSel");
   uint32_t USBx_BASE = (uint32_t)USBx;
 
   USBx_HOST->HCFG &= ~(USB_OTG_HCFG_FSLSPCS);
@@ -1458,6 +1466,7 @@ HAL_StatusTypeDef USB_InitFSLSPClkSel(USB_OTG_GlobalTypeDef *USBx, uint8_t freq)
   */
 HAL_StatusTypeDef USB_ResetPort(USB_OTG_GlobalTypeDef *USBx)
 {
+	USBD_DbgLog("USB_ResetPort");
   uint32_t USBx_BASE = (uint32_t)USBx;
 
   __IO uint32_t hprt0 = 0U;
@@ -1485,6 +1494,7 @@ HAL_StatusTypeDef USB_ResetPort(USB_OTG_GlobalTypeDef *USBx)
 */
 HAL_StatusTypeDef USB_DriveVbus(USB_OTG_GlobalTypeDef *USBx, uint8_t state)
 {
+	USBD_DbgLog("USB_DriveVbus");
   uint32_t USBx_BASE = (uint32_t)USBx;
   __IO uint32_t hprt0 = 0U;
 

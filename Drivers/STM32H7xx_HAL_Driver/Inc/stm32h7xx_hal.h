@@ -28,6 +28,37 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32h7xx_hal_conf.h"
+#include <stdio.h>
+
+/* DEBUG macros */
+
+#define USBD_DEBUG_LEVEL     3U
+
+#if (USBD_DEBUG_LEVEL > 0)
+#define USBD_UsrLog(...)    printf(__VA_ARGS__);\
+						 printf("\r\n");
+#else
+#define USBD_UsrLog(...)
+#endif
+
+#if (USBD_DEBUG_LEVEL > 1)
+
+#define USBD_ErrLog(...)    printf("ERROR: ") ;\
+						 printf(__VA_ARGS__);\
+						 printf("\r\n");
+#else
+#define USBD_ErrLog(...)
+#endif
+
+#if (USBD_DEBUG_LEVEL > 2)
+#define USBD_DbgLog(...)    printf("DEBUG : ") ;\
+						 printf(__VA_ARGS__);\
+						 printf("\r\n");
+#else
+#define USBD_DbgLog(...)
+#endif
+
+
 
 /** @addtogroup STM32H7xx_HAL_Driver
   * @{
